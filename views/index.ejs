@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body {
+            background-image: url('/home_backgroundimg.jpg');
+            background-size: cover;
+            /* Adjust as needed */
+            background-position: center;
+            /* Adjust as needed */
+        }
+    </style>
+    <title>Recipe Search</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Find a Recipe!</h1>
+        <form action="/search" method="POST">
+            <input type="text" name="query" placeholder="Search for a recipe ..." />
+            <!-- new line-->
+            <input type="text" name="diet" placeholder="Dietary Preference" />
+            <input type="text" name="cuisine" placeholder="Cuisine" />
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</body>
+
+</html>
