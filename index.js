@@ -1,6 +1,8 @@
 const express = require('express');
 const axios = require('axios')
 const ejs = require('ejs')
+const LogInCollection = require('./mongodb')
+const port = process.env.PORT || 3000
 
 const app = express();
 const api_key = "78e89240f741419f9a3093e2299188e9"
@@ -14,7 +16,73 @@ app.use(express.static('public'))
 // Parsing incoming request bodies
 app.use(express.urlencoded({ extended: false }))
 
+
+app.get('/signup', (req, res) => {
+
+    res.render('signup')
+    console.log("on signup page")
+})
 app.get('/', (req, res) => {
+    res.render('login')
+})
+
+
+app.post('/signup', async (req, res) => {
+
+    const data = {
+        name: req.body.name,
+        password: req.body.password
+    }
+
+    const checking = await LogInCollection.findOne({ name: req.body.name })
+    console.log("checking" + checking)
+    console.log("data" + data.name + ", " + data.password)
+    try {
+        if (checking != null && checking.name === req.body.name && checking.password === req.body.password) {
+            res.send("user details already exists")
+        }
+        else {
+            await LogInCollection.insertMany([data])
+            res.status(201).render('index');
+        }
+    }
+    catch (err) {
+        console.error("Error occurred during signup:", err);
+        res.send("Wrong Input")
+    }
+
+    console.log("made it!")
+    res.render('index')
+})
+
+app.post('/login', async (req, res) => {
+
+    try {
+        const check = await LogInCollection.findOne({ name: req.body.name })
+
+        if (check.password === req.body.password) {
+            res.render('index')
+        }
+
+        else {
+            res.send("incorrect password")
+        }
+
+
+    }
+
+    catch (e) {
+
+        res.send("wrong details")
+
+
+    }
+
+
+})
+
+
+app.get('/index', (req, res) => {
     res.render('index');
 })
 
@@ -53,4 +121,6 @@ const Port = 3000;
 app.listen(Port, () => {
     console.log('Server is running')
 })
+
+
 

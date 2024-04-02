@@ -78,17 +78,6 @@ button:hover {
     object-fit: cover;
 }
 
-/* .recipe-image {
-    width: 250px;
-
-    height: 200px;
-
-    object-fit: cover;
-    border-radius: 5px;
-   
-} 
-*/
-
 a {
     display: inline-block;
     margin-top: 20px;
