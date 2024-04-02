@@ -8,12 +8,11 @@ const app = express();
 const api_key = "78e89240f741419f9a3093e2299188e9"
 console.log("hello")
 
-// Setting up EJS as our view engine
+// Setting up EJS as my view engine
 app.set('view engine', 'ejs')
 
 app.use(express.json())
 app.use(express.static('public'))
-// Parsing incoming request bodies
 app.use(express.urlencoded({ extended: false }))
 
 
@@ -106,10 +105,8 @@ app.post('/search', async (req, res) => {
     const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?${queryParams}`)
     const recipes = response.data.results
     res.render('results', { recipes })
-    // Implement logic to filter recipes based on ingredients
 })
 
-//want to get a route
 app.get("/recipe/:id", async (req, res) => {
     const { id } = req.params;
     const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${api_key}`)
